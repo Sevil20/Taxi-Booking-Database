@@ -43,18 +43,22 @@ locationGPScoordinates varchar(60)
 )
 create table Payments 
 (
-paymentID int not null primary key,
-paymentAmount decimal not null,
-paymentMethod varchar(15),
-bookingID int not null ,
-transactionID varchar(15)
-)
-create table Reviews
-(
-reviewID int not null primary key,
+bookingID int not null,
+paymentID int not null,
+PRIMARY KEY(bookingID , paymentID),
+FOREIGN KEY(bookingID) REFERENCES Booking(bookingID) ON DELETE CASCADE,
 rating decimal,
 comment varchar(30) default 'No comment',
+reviewDate date
+)
+create table Reviews 
+(
 customerID int not null,
 driverID int not null,
+PRIMARY KEY(customerID, driverID),
+FOREIGN KEY(customerID) REFERENCES Customers(customerID) ON DELETE CASCADE,
+FOREIGN KEY(driverID) REFERENCES Drivers(driverID) ON DELETE CASCADE,
+rating decimal,
+comment varchar(30) default 'No comment',
 reviewDate date
 )
